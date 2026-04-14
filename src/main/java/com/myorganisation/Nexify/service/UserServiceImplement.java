@@ -8,6 +8,8 @@ import com.myorganisation.Nexify.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -38,7 +40,15 @@ public class UserServiceImplement implements UserService{
 
     @Override
     public List<UserResponseDto> getAllUser() {
-        return List.of();
+        List<User> userList = userRepository.findAll();
+        List<UserResponseDto> userResponseDtoList = new LinkedList<>();
+
+        for (User user : userList){
+            userResponseDtoList.add(mapUserToResponseDto(user));
+        }
+
+        return userResponseDtoList;
+
     }
 
     @Override

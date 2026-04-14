@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class Controller {
@@ -23,7 +25,12 @@ public class Controller {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<UserResponseDto> getUser (@PathVariable Long id ){
-        return new ResponseEntity<>(userService.getUser(id),HttpStatusCode.valueOf(200));a
+        return new ResponseEntity<>(userService.getUser(id),HttpStatusCode.valueOf(200));
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<UserResponseDto>> getAllUsers (){
+        return new ResponseEntity<>(userService.getAllUser(),HttpStatusCode.valueOf(200));
     }
 
 
