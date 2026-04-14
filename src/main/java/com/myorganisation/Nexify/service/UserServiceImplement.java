@@ -27,7 +27,13 @@ public class UserServiceImplement implements UserService{
 
     @Override
     public UserResponseDto getUser(Long id) {
-        return null;
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null){
+            return mapUserToResponseDto(user);
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
