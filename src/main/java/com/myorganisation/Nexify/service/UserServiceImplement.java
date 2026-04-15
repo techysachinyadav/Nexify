@@ -53,12 +53,33 @@ public class UserServiceImplement implements UserService{
 
     @Override
     public UserResponseDto updateUser(Long id, UserRequestDto userRequestDto) {
-        return null;
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user != null){
+            mapRequestDtoToUser(userRequestDto,user);
+            userRepository.save(user);
+            return mapUserToResponseDto(user);
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
     public GenericResponseDto deleteUser(Long id) {
-        return null;
+        User user = userRepository.findById(id).orElse(null);
+        GenericResponseDto genericResponseDto = new GenericResponseDto();
+        if (user != null){
+            userRepository.deleteById(id);
+            genericResponseDto.setSuccess(true);
+            genericResponseDto.setMessage("User deleted successfully");
+            genericResponseDto.setDetails(user);
+            return genericResponseDto;
+        }
+        else{
+             genericResponseDto.setMessage("User not found");
+             return genericResponseDto;
+        }
     }
 
     private UserResponseDto mapUserToResponseDto (User user){

@@ -1,5 +1,6 @@
 package com.myorganisation.Nexify.apicontroller;
 
+import com.myorganisation.Nexify.dto.genericresponsedto.GenericResponseDto;
 import com.myorganisation.Nexify.dto.userrequestdto.UserRequestDto;
 import com.myorganisation.Nexify.dto.userresponsedto.UserResponseDto;
 import com.myorganisation.Nexify.repository.UserRepository;
@@ -33,5 +34,14 @@ public class Controller {
         return new ResponseEntity<>(userService.getAllUser(),HttpStatusCode.valueOf(200));
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<UserResponseDto> updateUser (@PathVariable Long id , @RequestBody UserRequestDto userRequestDto){
+        return new ResponseEntity<>(userService.updateUser(id , userRequestDto),HttpStatusCode.valueOf(201));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<GenericResponseDto> deleteUser (@PathVariable Long id){
+        return new ResponseEntity<>(userService.deleteUser(id),HttpStatusCode.valueOf(200));
+    }
 
 }
