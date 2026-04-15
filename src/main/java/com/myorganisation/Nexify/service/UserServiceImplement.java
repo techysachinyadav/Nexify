@@ -82,6 +82,16 @@ public class UserServiceImplement implements UserService{
         }
     }
 
+    @Override
+    public List<UserResponseDto> findByUsernameContaining(String username) {
+        List<User> userList = userRepository.findByUsernameContaining(username);
+        List<UserResponseDto> userResponseDtoList = new LinkedList<>();
+        for (User user : userList ) {
+            userResponseDtoList.add(mapUserToResponseDto(user));
+        }
+        return userResponseDtoList;
+    }
+
     private UserResponseDto mapUserToResponseDto (User user){
         UserResponseDto userResponseDto = new UserResponseDto();
         userResponseDto.setId(user.getId());

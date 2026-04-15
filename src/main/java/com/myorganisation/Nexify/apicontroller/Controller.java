@@ -44,4 +44,9 @@ public class Controller {
         return new ResponseEntity<>(userService.deleteUser(id),HttpStatusCode.valueOf(200));
     }
 
+    @GetMapping("/search/{username}")
+    public ResponseEntity<List<UserResponseDto>> searchByUsername (@PathVariable String username){
+        return new ResponseEntity<>(userService.findByUsernameContaining(username),HttpStatusCode.valueOf(200));
+    }
+
 }
