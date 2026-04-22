@@ -23,5 +23,9 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile")
     private Profile profile;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "metadata")
+    private MetaData metaData;
 }
 

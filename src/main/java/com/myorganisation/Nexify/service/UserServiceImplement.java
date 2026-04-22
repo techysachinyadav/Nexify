@@ -3,8 +3,11 @@ package com.myorganisation.Nexify.service;
 import com.myorganisation.Nexify.dto.genericresponsedto.GenericResponseDto;
 import com.myorganisation.Nexify.dto.userrequestdto.UserRequestDto;
 import com.myorganisation.Nexify.dto.userresponsedto.UserResponseDto;
+import com.myorganisation.Nexify.entity.MetaData;
 import com.myorganisation.Nexify.entity.Profile;
 import com.myorganisation.Nexify.entity.User;
+import com.myorganisation.Nexify.repository.MetaDataRepository;
+import com.myorganisation.Nexify.repository.ProfileRepository;
 import com.myorganisation.Nexify.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,13 @@ public class UserServiceImplement implements UserService{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ProfileRepository profileRepository;
+
+    @Autowired
+    private MetaDataRepository metaDataRepository;
+
+
 
     @Override
     public UserResponseDto registerUser(UserRequestDto userRequestDto) {
@@ -27,6 +37,10 @@ public class UserServiceImplement implements UserService{
         Profile profile = new Profile();
         profile.setUser(user);
         user.setProfile(profile);
+        MetaData metaData = new MetaData();
+        metaDataRepository.save(metaData);
+        user.setMetaData(metaData);
+        metaData.setUser(user);
         userRepository.save(user);
         return mapUserToResponseDto(user);
     }
@@ -103,6 +117,8 @@ public class UserServiceImplement implements UserService{
         userResponseDto.setEmail(user.getEmail());
         userResponseDto.setUsername(user.getUsername());
         userResponseDto.setGender(user.getGender());
+        userResponseDto.setProfile(user.getProfile());
+        userResponseDto.setMetadata(user.getMetaData());
 
         return userResponseDto;
     }
